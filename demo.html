@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nguyễn Hữu Thành - 23810310389</title>
+    <style>
+        .header {
+            background: #e74c3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .price {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .sku {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">NGUYỄN HỮU THÀNH - MSSV: 23810310389</div>
+    <div id="status" style="text-align: center;">Đang kết nối API...</div>
+    <div class="product-container" id="list"></div>
+    <script>
+        async function loadData() {
+            try {
+                const res = await fetch("http://localhost/bagisto/public/graphql", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query: `query {
+                            allProducts(input: {}) {
+                                data { 
+                                    id 
+                                    name 
+                                    sku 
+                                    price 
+                                    shortDescription 
+                                }
+                            }
+                        }`
+                    })
+                });
+
+                const result = await res.json();
+
+                if (result.errors) {
+                    document.getElementById('status').innerHTML = "Lỗi Schema: " + result.errors[0].message;
+                    return;
+                }
+
+                const products = result.data.allProducts.data;
+                const container = document.getElementById('list');
+                document.getElementById('status').style.display = 'none';
+
+                products.slice(0, 5).forEach(p => {
+                    const priceFormatted = new Intl.NumberFormat('vi-VN').format(p.price);
+
+                    container.innerHTML += `
+                        <div class="card">
+                            <div class="sku">Mã sản phẩm: ${p.sku}</div>
+                            <h3>${p.name}</h3>
+                            <p style="font-size: 0.9em; color: #666; height: 40px; overflow: hidden;">
+                                ${p.shortDescription || 'Sản phẩm mới của Bagisto'}
+                            </p>
+                            <p class="price">${priceFormatted} VNĐ</p>
+                            <a href="http://localhost/bagisto/public/admin/catalog/products/edit/${p.id}" class="btn">Chi tiết (Admin)</a>
+                        </div>`;
+                });
+            } catch (err) {
+
+                document.getElementById('status').innerHTML = "<b>Lỗi kết nối Server!</b><br>";
+                console.error("Chi tiết lỗi:", err);
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+
+</html>
