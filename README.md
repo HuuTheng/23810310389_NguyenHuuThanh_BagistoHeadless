@@ -22,13 +22,15 @@ Sử dụng công cụ **GraphQL Playground** để truy vấn dữ liệu trự
 
 ### 1. Các Query cơ bản
 * **Query 1:** Lấy danh sách Categories (ID, Name, Slug).
+* ![Kết quả Query 1](anh/2.png)
 * **Query 2:** Lấy 05 sản phẩm mới nhất (ID, Name, Price, SKU, Type, Description).
+* ![Kết quả Query 2](anh/3.png)
 
 ### 2. Query 3 (Nâng cao): Lọc sản phẩm theo tên sinh viên
 * **Yêu cầu:** Sử dụng bộ lọc `filters` để lấy đúng 03 sản phẩm chứa tên "Nguyễn Hữu Thành".
 * **Minh chứng:** Kết quả trả về chính xác kèm dòng chữ định danh tại Tab Console.
+![Kết quả Query 3](anh/4.png)
 
-![Kết quả Query 3](anh/2.png)
 
 ---
 
@@ -40,7 +42,7 @@ Xây dựng trang web hiển thị sản phẩm bằng **HTML5/JavaScript (Fetch
 * **Kỹ thuật:** Sử dụng `fetch()` gửi yêu cầu `POST` kèm Header định dạng JSON.
 
 ###  Giao diện thực tế:
-![Giao diện Frontend](anh/3.png)
+
 
 ###  Mã nguồn chi tiết:
 ![Mã nguồn](anh/4.png)
