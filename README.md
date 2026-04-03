@@ -43,9 +43,10 @@ Xây dựng trang web hiển thị sản phẩm bằng **HTML5/JavaScript (Fetch
 
 ###  Giao diện thực tế:
 
+![Mã nguồn](anh/5.png)
 
 ###  Mã nguồn chi tiết:
-![Mã nguồn](anh/4.png)
+![Mã nguồn](6.png)
 
 ---
 
